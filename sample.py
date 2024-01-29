@@ -97,7 +97,7 @@ def view():
 
     st.markdown("---")
     st.header("사이드바")
-    # 초기 세팅
+
     
 
 
@@ -137,6 +137,37 @@ def view():
     audio_file = open('sample_audio.mp3', 'rb')
     st.audio( audio_file.read() , format='audio/mp3')
 
+    st.markdown("---")
+    # CSS를 사용해 버튼 스타일 정의
+    st.header("css 버튼 출력+파이썬 변수")
+    button_style = """
+    <style>
+    .custom-button {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        color: white;
+        background-color: gray;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .custom-button:hover {
+        background-color: black;
+    }
+    </style>
+    """
+
+    # Streamlit 페이지에 CSS 적용
+    st.markdown(button_style, unsafe_allow_html=True)
+
+
+    py_variable = "파이썬 변수"
+    # HTML 버튼 생성
+    button_html = f'<button onclick="handleClick()" class="custom-button">{py_variable}</button>'
+    st.markdown(button_html, unsafe_allow_html=True)
+
+#==================================================================================================
 
 # 폼 출력
 def form():
@@ -336,7 +367,7 @@ def mysql():
     '''
     st.code(code)
     st.markdown("---")
-    
+
 
 
 
@@ -370,6 +401,10 @@ import mysql.connector
 lang chain 설치
 '''
 st.sidebar.code(code)
+
+
+
+
 
 
 
