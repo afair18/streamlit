@@ -13,8 +13,8 @@ import numpy as np
 
 
 with st.sidebar:
-    choice = option_menu("Menu", ["출력", "폼", "차트"],
-    icons=['view-stacked', 'ui-checks', 'bar-chart'],
+    choice = option_menu("Menu", ["출력", "폼", "차트","MYSQL"],
+    icons=['view-stacked', 'ui-checks', 'bar-chart','database-check'],
     menu_icon="app-indicator", default_index=0,
     styles={
         "container": {"padding": "4!important", "background-color": "#fafafa"},
@@ -154,8 +154,6 @@ def form():
     message = st.text_area('메세지를 입력하세요', height=3)
     st.subheader(message)
 
-
-
     st.markdown("---")
     st.header("비밀번호 입력폼")
     # 비밀번호 입력
@@ -171,8 +169,6 @@ def form():
         st.write('동의하셨습니다.')
     else :
         st.write('동의하지 않았습니다.')
-
-
     st.markdown("---")
     st.header("라디오 버튼")
     # 라디오버튼 선택예제
@@ -181,19 +177,12 @@ def form():
     selected_option = st.radio('Select an option', options)
     st.write('You selected:', selected_option)
 
-
-
-
-
     st.markdown("---")
     st.header("숫자입력 폼")
     # 4. 숫자 입력, 정수
     st.number_input('숫자 입력', 1, 100)
     # 5. 숫자 입력, 실수
     st.number_input('실수 입력', 1.0, 100.0)
-
-
-
 
     st.markdown("---")
     st.header("날짜입력 폼")
@@ -293,6 +282,66 @@ def chart():
     with tab2:
         st.plotly_chart(fig, theme=None, use_container_width=True)
 
+
+def mysql():
+    st.header("MYSQL 접속")
+    code = '''
+    import mysql.connector
+    # MySQL 데이터베이스 연결 설정
+    db = mysql.connector.connect(
+        host="localhost",
+        user="your_username",
+        password="your_password",
+        database="your_database"
+    )
+
+    # MySQL 커서 생성
+    cursor = db.cursor()
+    '''
+    st.code(code)
+    st.markdown("---")
+
+    st.header("MYSQL 데이터 추가")
+    code = '''
+    new_data = st.text_input("새로운 데이터 입력:")
+    if st.button("추가"):
+        insert_query = "INSERT INTO your_table_name (column_name) VALUES (%s)"
+        cursor.execute(insert_query, (new_data,))
+        db.commit()
+        st.success("데이터가 추가되었습니다.")
+    '''
+    st.code(code)
+    st.markdown("---")
+
+    st.header("MYSQL 데이터 조회")
+    code = '''
+    # 데이터 조회
+    cursor.execute("SELECT * FROM your_table_name")
+    result = cursor.fetchall()
+    for row in result:
+        st.write(row)
+    '''
+    st.code(code)
+    st.markdown("---")
+
+    st.header("MYSQL 데이터 수정")
+    code = '''
+    # 데이터 수정
+    update_data = st.text_input("수정할 데이터 입력:")
+    if st.button("수정"):
+        update_query = "UPDATE your_table_name SET column_name = %s WHERE column_name = %s"
+        cursor.execute(update_query, (update_data, update_data))
+        db.commit()
+        st.success("데이터가 수정되었습니다.")
+    '''
+    st.code(code)
+    st.markdown("---")
+    
+
+
+
+
+
 st.sidebar.header("모듈 설치")
 code = '''
 streamlit 설치
@@ -323,11 +372,18 @@ lang chain 설치
 st.sidebar.code(code)
 
 
+
+
+
 # 메뉴에 따라 내용이 다르게 나옴 
 if choice == "출력":
     view()
 elif choice == "폼":
     form()
+elif choice == "차트":
+    chart()
+elif choice == "MYSQL":
+    mysql()
 else:
     chart()
 
