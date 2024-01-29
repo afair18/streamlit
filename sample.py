@@ -466,12 +466,12 @@ def etc():
     time.sleep(3)   # 3초 시간 지연
 
     # 로그인 창에 아이디/비밀번호 입력
-    loginID = "afair18"
+    loginID = "네이버아이디"
     pyperclip.copy(loginID)
     driver.find_element(By.XPATH, '//*[@id="id"]').send_keys(Keys.CONTROL + 'v') # 붙여넣기
 
 
-    loginPW = "rudals1822"
+    loginPW = "네이버비번"
     pyperclip.copy(loginPW)
     driver.find_element(By.XPATH, '//*[@id="pw"]').send_keys(Keys.CONTROL + 'v') # 붙여넣기
 
