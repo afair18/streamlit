@@ -11,8 +11,8 @@ import numpy as np
 
 # 사이드바 메뉴
 with st.sidebar:
-    choice = option_menu("Menu", ["세팅","출력", "폼", "차트","MYSQL","기타기능"],
-    icons=['gear','view-stacked', 'ui-checks', 'bar-chart','database-check','cpu'],
+    choice = option_menu("Menu", ["세팅","출력", "폼", "차트","MYSQL","기타기능","langchain"],
+    icons=['gear','view-stacked', 'ui-checks', 'bar-chart','database-check','cpu','robot'],
     menu_icon="app-indicator", default_index=0,
     styles={
         "container": {"padding": "4!important", "background-color": "#fafafa"},
@@ -28,25 +28,25 @@ with st.sidebar:
 def setting():
     st.header("모듈 설치")
     code = '''
-    streamlit 설치
+    #streamlit 설치
     pip install streamlit
     import streamlit as st
 
-    streamlit 실행
+    #streamlit 실행
     streamlit run sample.py
 
-    사이드 메뉴 설치
+    #사이드 메뉴 설치
     pip install streamlit-option-menu
     from streamlit_option_menu import option_menu
 
-    차트 설치
+    #차트 설치
     import pandas as pd
     import numpy as np
 
-    메뉴 왼쪽 icons 참고
+    #메뉴 왼쪽 icons 참고
     https://icons.getbootstrap.com/
 
-    MYSQL 설치+사용
+    #MYSQL 설치+사용
     pip install mysql-connector-python
     import mysql.connector
 
@@ -491,6 +491,127 @@ def etc():
     st.code(code)
 
 
+
+    st.header("엑셀,워드 다루기")
+    code = '''
+    import os
+    import openpyxl as op #엑셀 모듈
+    from docx import Document #워드 모듈
+
+    from openpyxl.styles.fonts import Font
+    from docx.enum.text import WD_ALIGN_PARAGRAPH
+    from docx.enum.style import WD_STYLE_TYPE
+    from docx.shared import Cm, Inches
+    from docx.oxml.ns import qn
+    from docx.shared import Pt
+
+
+
+    # 현재 파일 경로
+    path = os.path.dirname(os.path.abspath(__file__))
+
+    wb = op.load_workbook(f"{path}/excel.xlsx") #워크북 객체 생성(파일명 : test.xlsx)
+    ws = wb.active #활성화 되어있는 시트 설정
+
+
+    #Sheet의 Cell 속성 사용하기
+    data1 = ws.cell(row=1, column=2).value
+
+    #엑셀 인덱스(Range) 사용하기
+    data2 = ws["C1"].value
+
+
+    #위 결과 출력
+    print("cell(1,2) : ", data1)
+    print('Range("C1"):', data2)
+
+
+
+    # 엑셀의 D4 셀에 C의 합(sum 함수 이용)을 넣고 저장
+    ws["D4"].value = "=SUM(A4:C4)"
+    font_format = Font(size=15, name='굴림', color = 'FF0000',bold = True,italic = True)
+    ws["D4"].font = font_format
+
+    # 새로운 시트 생성 ws = wb.create_sheet("연습")
+    wb.save(f"{path}/excel.xlsx") # 엑셀 저장
+
+    # 엑셀의 값을 데이터에 넣기
+    data = []
+    for row in ws.rows:
+        data.append(row[1].value) # B열 엑셀 데이터를 리스트에 추가
+
+    print(data)
+
+
+    # 워드문서 만들기
+
+    # 불러오기
+    doc = Document()
+
+    # 글씨입력
+    doc.add_heading('제목 입니다', level=1)
+    para = doc.add_paragraph('문단에 들어갈 내용입니다.') #문단 추가
+
+
+    #이미지삽입
+    doc.add_picture(f'{path}/excelimg.jpg', width=Cm(10)) #이미지 삽입
+
+
+
+    #표만들기
+    table = doc.add_table(rows=2, cols=3) #표 추가
+    table.style = doc.styles['Table Grid']
+    cell = table.cell(0, 1) #0행 1열
+    cell.text = '표에 들어갈 내용입니다.' #표에 내용 추가
+
+    #저장하기
+    doc.save(f'{path}/word.docx')
+    '''
+    st.code(code)
+
+def langchain():
+    st.header("Langchain")
+    
+    code = '''
+    from langchain.chat_models import ChatOpenAI
+    import openai
+    import os
+
+    # OpenAI API 키 설정
+    os.environ['OPENAI_API_KEY'] = "키값"
+    
+    # Langchain을 사용하여 모델 연결
+    llm = ChatOpenAI(temperature=0,               # 창의성 (0.0 ~ 2.0) 
+                 max_tokens=2048,             # 최대 토큰수
+                 model_name='gpt-3.5-turbo',  # 모델명
+                )
+
+    # 질의내용
+    question = '미국의 수도는 뭐야?'
+
+    # 질의
+    st.write((f'[답변]: {llm.predict(question)}'))
+
+
+
+    # 사용가능한 모델 목록
+    openai.api_key = "키값"
+    model_list = sorted([m['id'] for m in openai.Model.list()['data']])
+    for m in model_list:
+        st.write(m)
+
+
+    # 템플릿 사용
+    from langchain.prompts import PromptTemplate
+    from langchain.chains import LLMChain
+    template = '{area1} 와 {area2} 의 시차는 몇시간이야?'
+    prompt = PromptTemplate(template=template, input_variables=['area1', 'area2'])
+    chain = LLMChain(prompt=prompt, llm=llm)
+    st.write(chain.run(area1='서울', area2='파리'))
+    '''
+    st.code(code)
+
+
 # 메뉴에 따라 내용이 다르게 나옴 
 if choice == "출력":
     view()
@@ -504,6 +625,8 @@ elif choice == "세팅":
     setting()
 elif choice == "기타기능":
     etc()
+elif choice == "langchain":
+    langchain()
 else:
     view()
 
