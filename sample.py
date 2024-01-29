@@ -13,8 +13,8 @@ import numpy as np
 
 
 with st.sidebar:
-    choice = option_menu("Menu", ["출력", "폼", "차트","MYSQL"],
-    icons=['view-stacked', 'ui-checks', 'bar-chart','database-check'],
+    choice = option_menu("Menu", ["세팅","출력", "폼", "차트","MYSQL"],
+    icons=['gear','view-stacked', 'ui-checks', 'bar-chart','database-check'],
     menu_icon="app-indicator", default_index=0,
     styles={
         "container": {"padding": "4!important", "background-color": "#fafafa"},
@@ -24,6 +24,38 @@ with st.sidebar:
     }
     )
 
+
+# 모듈세팅 및 기본설치
+def setting():
+    st.header("모듈 설치")
+    code = '''
+    streamlit 설치
+    pip install streamlit
+    import streamlit as st
+
+    streamlit 실행
+    streamlit run sample.py
+
+    사이드 메뉴 설치
+    pip install streamlit-option-menu
+    from streamlit_option_menu import option_menu
+
+    차트 설치
+    import pandas as pd
+    import numpy as np
+
+    메뉴 왼쪽 icons 참고
+    https://icons.getbootstrap.com/
+
+    MYSQL 설치+사용
+    pip install mysql-connector-python
+    import mysql.connector
+
+
+    lang chain 설치
+    '''
+    st.code(code)
+    st.markdown("---")
 
 #기본출력
 def view():
@@ -370,46 +402,6 @@ def mysql():
 
 
 
-
-
-
-st.sidebar.header("모듈 설치")
-code = '''
-streamlit 설치
-pip install streamlit
-import streamlit as st
-
-streamlit 실행
-streamlit run sample.py
-
-사이드 메뉴 설치
-pip install streamlit-option-menu
-from streamlit_option_menu import option_menu
-
-차트 설치
-import pandas as pd
-import numpy as np
-
-메뉴 왼쪽 icons 참고
-https://icons.getbootstrap.com/
-
-MYSQL 설치+사용
-pip install mysql-connector-python
-import mysql.connector
-
-
-lang chain 설치
-'''
-st.sidebar.code(code)
-
-
-
-
-
-
-
-
-
 # 메뉴에 따라 내용이 다르게 나옴 
 if choice == "출력":
     view()
@@ -419,8 +411,10 @@ elif choice == "차트":
     chart()
 elif choice == "MYSQL":
     mysql()
+elif choice == "세팅":
+    setting()
 else:
-    chart()
+    view()
 
 
 
