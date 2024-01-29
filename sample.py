@@ -5,16 +5,14 @@ from PIL import Image
 import pandas as pd
 import numpy as np
 
-# 메뉴 구현
-# pip install streamlit-option-menu
-# from streamlit_option_menu import option_menu
 
 
 
 
+# 사이드바 메뉴
 with st.sidebar:
-    choice = option_menu("Menu", ["세팅","출력", "폼", "차트","MYSQL"],
-    icons=['gear','view-stacked', 'ui-checks', 'bar-chart','database-check'],
+    choice = option_menu("Menu", ["세팅","출력", "폼", "차트","MYSQL","기타기능"],
+    icons=['gear','view-stacked', 'ui-checks', 'bar-chart','database-check','cpu'],
     menu_icon="app-indicator", default_index=0,
     styles={
         "container": {"padding": "4!important", "background-color": "#fafafa"},
@@ -23,6 +21,7 @@ with st.sidebar:
         "nav-link-selected": {"background-color": "#08c7b4"},
     }
     )
+
 
 
 # 모듈세팅 및 기본설치
@@ -401,6 +400,96 @@ def mysql():
     st.markdown("---")
 
 
+def etc():
+    st.header("웹페이지 파싱")
+    code = '''
+    import requests
+    from bs4 import BeautifulSoup
+
+    # 네이버 금융에서 종목코드 넣으면 가격정보 가져오기
+
+    codes = ['096530', '010130'] # 종목코드 리스트
+    prices = [] # 가격정보가 담길 리스트
+
+    for code in codes:
+        url = 'https://finance.naver.com/item/main.nhn?code=' + code
+        response = requests.get(url)
+
+        response.raise_for_status()
+
+        html = response.text
+
+        soup = BeautifulSoup(html, 'html.parser')
+        today = soup.select_one('#chart_area > div.rate_info > div')
+        price = today.select_one('.blind')
+        prices.append(price.get_text())
+        print(prices)
+'''
+    st.code(code)
+
+    import requests
+    from bs4 import BeautifulSoup
+
+    # 네이버 금융에서 종목코드 넣으면 가격정보 가져오기
+    
+    codes = ['096530', '010130'] # 종목코드 리스트
+    prices = [] # 가격정보가 담길 리스트
+
+    for code in codes:
+        url = 'https://finance.naver.com/item/main.nhn?code=' + code
+        response = requests.get(url)
+        response.raise_for_status()
+
+        html = response.text
+
+        soup = BeautifulSoup(html, 'html.parser')
+        today = soup.select_one('#chart_area > div.rate_info > div')
+        price = today.select_one('.blind')
+        prices.append(price.get_text())
+        #print(prices)
+    st.write("실행결과")
+    st.write(prices)
+    
+
+    st.header("네이버 자동로그인")
+    code = '''
+    import pyperclip
+    from selenium import webdriver
+    from selenium.webdriver.common.keys import Keys
+    from selenium.webdriver.common.by import By
+    import time
+
+    # 웹드라이버 열기 (네이버 메인 화면)
+    driver = webdriver.Chrome()
+    driver.get("https://nid.naver.com/nidlogin.login?mode=form&url=https%3A%2F%2Fwww.naver.com")
+
+    time.sleep(3)   # 3초 시간 지연
+
+    # 로그인 창에 아이디/비밀번호 입력
+    loginID = "afair18"
+    pyperclip.copy(loginID)
+    driver.find_element(By.XPATH, '//*[@id="id"]').send_keys(Keys.CONTROL + 'v') # 붙여넣기
+
+
+    loginPW = "rudals1822"
+    pyperclip.copy(loginPW)
+    driver.find_element(By.XPATH, '//*[@id="pw"]').send_keys(Keys.CONTROL + 'v') # 붙여넣기
+
+
+    time.sleep(1)
+
+    # 로그인 버튼 클릭
+    driver.find_element(By.XPATH, '//*[@id="log.login"]').click()
+    time.sleep(2)
+
+    #로그인 후 '새로운 환경' 알림에서 '나중에 하기' 클릭
+    driver.find_element(By.XPATH, '//*[@id="new.dontsave"]').click()
+
+    while(True):
+        pass
+    '''
+    st.code(code)
+
 
 # 메뉴에 따라 내용이 다르게 나옴 
 if choice == "출력":
@@ -413,6 +502,8 @@ elif choice == "MYSQL":
     mysql()
 elif choice == "세팅":
     setting()
+elif choice == "기타기능":
+    etc()
 else:
     view()
 
