@@ -132,10 +132,10 @@ def view():
 #    video_file = open('sample_movie.mp4', 'rb')
 #    st.video(video_file)
 
-#    st.markdown("---")
-#    st.header("오디오 출력")
-#    audio_file = open('sample_audio.mp3', 'rb')
-#    st.audio( audio_file.read() , format='audio/mp3')
+    st.markdown("---")
+    st.header("오디오 출력")
+    audio_file = open('sample_audio.mp3', 'rb')
+    st.audio( audio_file.read() , format='audio/mp3')
 
 
 # 폼 출력
@@ -312,6 +312,11 @@ import numpy as np
 
 메뉴 왼쪽 icons 참고
 https://icons.getbootstrap.com/
+
+MYSQL 설치+사용
+pip install mysql-connector-python
+import mysql.connector
+
 
 lang chain 설치
 '''
