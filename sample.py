@@ -670,7 +670,7 @@ def langchain():
     <style>
         img {
             max-width: 100%;
-            height: 500px;
+            height: 300px;
         }
         .container {
             margin-top: 20px;
@@ -678,7 +678,7 @@ def langchain():
     </style>
 <input type="file" id="imageInput" accept="image/*">
 <div class="container">
-    <img id="image" style="display:none;">
+    <img id="image" >
 </div>
 
 
@@ -734,10 +734,10 @@ def langchain():
         }, 'image/png');
     });
     </script>
-    <button id="cropButton">Crop</button>
+    <button id="cropButton">자르기</button>
     """
     st.title('이미지 자르기 예제')
-    html(HTML_CODE,height=200)
+    html(HTML_CODE,height=400)
 
 
 # 메뉴에 따라 내용이 다르게 나옴 
