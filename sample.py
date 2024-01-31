@@ -569,49 +569,7 @@ def etc():
     '''
     st.code(code)
 
-def langchain():
-    st.header("Langchain")
-    
-    code = '''
-    from langchain.chat_models import ChatOpenAI
-    import openai
-    import os
-
-    # OpenAI API 키 설정
-    os.environ['OPENAI_API_KEY'] = "키값"
-    
-    # Langchain을 사용하여 모델 연결
-    llm = ChatOpenAI(temperature=0,               # 창의성 (0.0 ~ 2.0) 
-                 max_tokens=2048,             # 최대 토큰수
-                 model_name='gpt-3.5-turbo',  # 모델명
-                )
-
-    # 질의내용
-    question = '미국의 수도는 뭐야?'
-
-    # 질의
-    st.write((f'[답변]: {llm.predict(question)}'))
-
-
-
-    # 사용가능한 모델 목록
-    openai.api_key = "키값"
-    model_list = sorted([m['id'] for m in openai.Model.list()['data']])
-    for m in model_list:
-        st.write(m)
-
-
-    # 템플릿 사용
-    from langchain.prompts import PromptTemplate
-    from langchain.chains import LLMChain
-    template = '{area1} 와 {area2} 의 시차는 몇시간이야?'
-    prompt = PromptTemplate(template=template, input_variables=['area1', 'area2'])
-    chain = LLMChain(prompt=prompt, llm=llm)
-    st.write(chain.run(area1='서울', area2='파리'))
-    '''
-    st.code(code)
-
-    from streamlit.components.v1 import html
+        from streamlit.components.v1 import html
 
     # HTML + JavaScript 코드
     HTML_CODE = """
@@ -738,6 +696,50 @@ def langchain():
     """
     st.title('이미지 자르기 예제')
     html(HTML_CODE,height=400)
+
+def langchain():
+    st.header("Langchain")
+    
+    code = '''
+    from langchain.chat_models import ChatOpenAI
+    import openai
+    import os
+
+    # OpenAI API 키 설정
+    os.environ['OPENAI_API_KEY'] = "키값"
+    
+    # Langchain을 사용하여 모델 연결
+    llm = ChatOpenAI(temperature=0,               # 창의성 (0.0 ~ 2.0) 
+                 max_tokens=2048,             # 최대 토큰수
+                 model_name='gpt-3.5-turbo',  # 모델명
+                )
+
+    # 질의내용
+    question = '미국의 수도는 뭐야?'
+
+    # 질의
+    st.write((f'[답변]: {llm.predict(question)}'))
+
+
+
+    # 사용가능한 모델 목록
+    openai.api_key = "키값"
+    model_list = sorted([m['id'] for m in openai.Model.list()['data']])
+    for m in model_list:
+        st.write(m)
+
+
+    # 템플릿 사용
+    from langchain.prompts import PromptTemplate
+    from langchain.chains import LLMChain
+    template = '{area1} 와 {area2} 의 시차는 몇시간이야?'
+    prompt = PromptTemplate(template=template, input_variables=['area1', 'area2'])
+    chain = LLMChain(prompt=prompt, llm=llm)
+    st.write(chain.run(area1='서울', area2='파리'))
+    '''
+    st.code(code)
+
+
 
 
 # 메뉴에 따라 내용이 다르게 나옴 
