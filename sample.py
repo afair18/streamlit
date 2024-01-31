@@ -569,7 +569,7 @@ def etc():
     '''
     st.code(code)
 
-        from streamlit.components.v1 import html
+    from streamlit.components.v1 import html
 
     # HTML + JavaScript 코드
     HTML_CODE = """
