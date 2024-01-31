@@ -673,7 +673,7 @@ def langchain():
             margin-top: 20px;
         }
     </style>
-    input type="file" id="imageInput" accept="image/*">
+<input type="file" id="imageInput" accept="image/*">
 <div class="container">
     <img id="image" style="display:none;">
 </div>
