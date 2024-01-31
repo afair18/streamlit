@@ -678,7 +678,7 @@ def langchain():
     </style>
 <input type="file" id="imageInput" accept="image/*">
 <div class="container">
-    <img id="image" >
+    <img id="image" style="display:none;">
 </div>
 
 
