@@ -680,7 +680,7 @@ def langchain():
 <div class="container">
     <img id="image" style="display:none;">
 </div>
-<button id="cropButton">Crop</button>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
 <script>
@@ -734,6 +734,7 @@ def langchain():
         }, 'image/png');
     });
     </script>
+    <button id="cropButton">Crop</button>
     """
     st.title('이미지 자르기 예제')
     html(HTML_CODE,height=200)
