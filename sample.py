@@ -662,6 +662,77 @@ def langchain():
     </script>
     """
 
+
+    HTML_CODE = """
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" />
+    <style>
+        img {
+            max-width: 100%;
+        }
+        .container {
+            margin-top: 20px;
+        }
+    </style>
+    input type="file" id="imageInput" accept="image/*">
+<div class="container">
+    <img id="image" style="display:none;">
+</div>
+<button id="cropButton">Crop</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+<script>
+    let image = document.getElementById('image');
+    let input = document.getElementById('imageInput');
+    let cropButton = document.getElementById('cropButton');
+    let cropper;
+
+    input.addEventListener('change', function(e) {
+        const files = e.target.files;
+        if (files && files.length > 0) {
+            const fileReader = new FileReader();
+
+            fileReader.onload = function() {
+                image.src = this.result;
+                image.style.display = 'block';
+
+                if (cropper) {
+                    cropper.destroy();
+                }
+
+                cropper = new Cropper(image, {
+                    aspectRatio: 16 / 9,
+                    viewMode: 1,
+                });
+            };
+
+            fileReader.readAsDataURL(files[0]);
+        }
+    });
+
+    cropButton.addEventListener('click', function() {
+        if (!cropper) {
+            return;
+        }
+
+        const canvas = cropper.getCroppedCanvas();
+        if (!canvas) {
+            return;
+        }
+
+        canvas.toBlob(function(blob) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'cropped-image.png';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }, 'image/png');
+    });
+    </script>
+    """
+
     # Streamlit 앱에서 HTML 코드 삽입
     st.title('Streamlit 음성 인식 예제')
     html(HTML_CODE, height=200)

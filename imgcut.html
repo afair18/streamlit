@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+    <title>이미지 선택 및 잘라내기</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" />
+    <style>
+        img {
+            max-width: 100%;
+        }
+        .container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<input type="file" id="imageInput" accept="image/*">
+<div class="container">
+    <img id="image" style="display:none;">
+</div>
+<button id="cropButton">Crop</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+<script>
+    let image = document.getElementById('image');
+    let input = document.getElementById('imageInput');
+    let cropButton = document.getElementById('cropButton');
+    let cropper;
+
+    input.addEventListener('change', function(e) {
+        const files = e.target.files;
+        if (files && files.length > 0) {
+            const fileReader = new FileReader();
+
+            fileReader.onload = function() {
+                image.src = this.result;
+                image.style.display = 'block';
+
+                if (cropper) {
+                    cropper.destroy();
+                }
+
+                cropper = new Cropper(image, {
+                    aspectRatio: 16 / 9,
+                    viewMode: 1,
+                });
+            };
+
+            fileReader.readAsDataURL(files[0]);
+        }
+    });
+
+    cropButton.addEventListener('click', function() {
+        if (!cropper) {
+            return;
+        }
+
+        const canvas = cropper.getCroppedCanvas();
+        if (!canvas) {
+            return;
+        }
+
+        canvas.toBlob(function(blob) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'cropped-image.png';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }, 'image/png');
+    });
+</script>
+</body>
+</html>
