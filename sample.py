@@ -661,7 +661,9 @@ def langchain():
     });
     </script>
     """
-
+    # Streamlit 앱에서 HTML 코드 삽입
+    st.title('Streamlit 음성 인식 예제')
+    html(HTML_CODE, height=200)
 
     HTML_CODE = """
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" />
@@ -733,10 +735,9 @@ def langchain():
     });
     </script>
     """
+    st.title('이미지 자르기 예제')
+    html(HTML_CODE)
 
-    # Streamlit 앱에서 HTML 코드 삽입
-    st.title('Streamlit 음성 인식 예제')
-    html(HTML_CODE, height=200)
 
 # 메뉴에 따라 내용이 다르게 나옴 
 if choice == "출력":
