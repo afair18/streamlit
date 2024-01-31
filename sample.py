@@ -736,7 +736,7 @@ def langchain():
     </script>
     """
     st.title('이미지 자르기 예제')
-    html(HTML_CODE)
+    html(HTML_CODE,height=200)
 
 
 # 메뉴에 따라 내용이 다르게 나옴 
