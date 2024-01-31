@@ -668,6 +668,7 @@ def langchain():
     <style>
         img {
             max-width: 100%;
+            height: auto;
         }
         .container {
             margin-top: 20px;
