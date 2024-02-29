@@ -28,33 +28,70 @@ with st.sidebar:
 def setting():
     st.header("모듈 설치")
     code = '''
-    #streamlit 설치
+    # streamlit 설치
     pip install streamlit
     import streamlit as st
 
-    #streamlit 실행
+    # streamlit 실행
     streamlit run sample.py
 
-    #사이드 메뉴 설치
-    pip install streamlit-option-menu
-    from streamlit_option_menu import option_menu
-
-    #차트 설치
+    # 차트 설치
     import pandas as pd
     import numpy as np
 
-    #메뉴 왼쪽 icons 참고
+    # 메뉴 왼쪽 icons 참고
     https://icons.getbootstrap.com/
 
-    #MYSQL 설치+사용
+    # MYSQL 설치+사용
     pip install mysql-connector-python
     import mysql.connector
 
 
-    lang chain 설치
+    # lang chain 설치
     pip install langchain
+
+    #  메뉴 설치
+    pip install streamlit-option-menu
+
     '''
+
+    code2 = '''
+    # 메뉴 구성 샘플코드
+    import streamlit as st
+    from streamlit_option_menu import option_menu
+
+    # 사이드바 메뉴
+    with st.sidebar:
+        choice = option_menu("Menu", ["메뉴1","메뉴2"],
+        icons=['gear','view-stacked', 'ui-checks', 'bar-chart','database-check','cpu','robot'],
+        menu_icon="app-indicator", default_index=0,
+        styles={
+            "container": {"padding": "4!important", "background-color": "#fafafa"},
+            "icon": {"color": "black", "font-size": "20px"},
+            "nav-link": {"font-size": "14px", "text-align": "left", "margin":"0px", "--hover-color": "#fafafa"},
+            "nav-link-selected": {"background-color": "#08c7b4"},
+        }
+        )
+
+    # 각 메뉴에 대한 내용
+    def menu1():
+        st.write('메뉴1 입니다.')
+
+    def menu2():
+        st.write('메뉴2 입니다.')
+
+    # 메뉴연결
+    if choice == "메뉴1":
+        menu1()
+    elif choice == "메뉴2":
+        menu2()
+    else:
+        menu1()
+    '''
+
     st.code(code)
+    st.code(code2)
+
     st.markdown("---")
 
 #기본출력
