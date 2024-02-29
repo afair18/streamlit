@@ -203,7 +203,7 @@ def view():
 # 폼 출력
 def form():
     st.markdown("---")
-    st.header("텍스트 입력 폼11")
+    st.header("텍스트 입력 폼")
     # 1. 이름 입력 받기
     name = st.text_input('이름을 입력하세요!')
 
@@ -215,6 +215,16 @@ def form():
     # 여러 행을 입력가능하도록
     message = st.text_area('메세지를 입력하세요', height=3)
     st.subheader(message)
+
+    code ='''
+    name = st.text_input('이름을 입력하세요!')
+    address = st.text_input('주소를 입력하세요!', max_chars=10)
+    message = st.text_area('메세지를 입력하세요', height=3)
+    '''
+    st.code(code)
+
+
+
 
     st.markdown("---")
     st.header("비밀번호 입력폼")
