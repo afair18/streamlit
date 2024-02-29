@@ -52,6 +52,7 @@ def setting():
 
 
     lang chain 설치
+    pip install langchain
     '''
     st.code(code)
     st.markdown("---")
@@ -365,7 +366,7 @@ def form():
     st.write(color)
     '''
     st.code(code)
-    
+
 
 #차트 출력
 def chart():
