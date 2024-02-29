@@ -225,14 +225,6 @@ def form():
 
 
 
-
-    st.markdown("---")
-    st.header("비밀번호 입력폼")
-    # 비밀번호 입력
-    password = st.text_input('비밀번호 입력', type='password')
-    st.write(password)
-
-
     st.markdown("---")
     st.header("체크박스 선택")
     # 체크박스 선택
@@ -241,14 +233,35 @@ def form():
         st.write('동의하셨습니다.')
     else :
         st.write('동의하지 않았습니다.')
+
+    code = '''
+    agree = st.checkbox('동의합니다')
+    if agree :
+        st.write('동의하셨습니다.')
+    else :
+        st.write('동의하지 않았습니다.')
+    '''
+    st.code(code)
+
+
+    # 라디오버튼 선택예제
     st.markdown("---")
     st.header("라디오 버튼")
-    # 라디오버튼 선택예제
+    
 
     options = ['Option 1', 'Option 2', 'Option 3']
     selected_option = st.radio('Select an option', options)
     st.write('You selected:', selected_option)
 
+
+    code = '''
+    options = ['Option 1', 'Option 2', 'Option 3']
+    selected_option = st.radio('Select an option', options)
+    st.write('You selected:', selected_option)
+    '''
+    st.code(code)
+
+    # 숫자 입력 폼
     st.markdown("---")
     st.header("숫자입력 폼")
     # 4. 숫자 입력, 정수
@@ -256,48 +269,103 @@ def form():
     # 5. 숫자 입력, 실수
     st.number_input('실수 입력', 1.0, 100.0)
 
+
+    code = '''
+    st.number_input('숫자 입력', 1, 100)
+    st.number_input('실수 입력', 1.0, 100.0)
+    '''
+    st.code(code)
+
+    # 날짜 입력 폼
     st.markdown("---")
     st.header("날짜입력 폼")
-    # 6. 날짜 입력
     my_date = st.date_input('약속날짜') # 디폴트로 오늘 날짜가 찍혀 있다.
     st.write(my_date)
 
-    # 요일 찍기
+    # 요일 출력
     st.write( my_date.weekday() )
     st.write( my_date.strftime('%A') )
 
+    code = '''
+    my_date = st.date_input('약속날짜') 
+    st.write(my_date)
+    
+    # 요일 출력
+    st.write( my_date.weekday() )
+    st.write( my_date.strftime('%A') )
 
-    st.markdown("---")
-    st.header("멀티 셀렉트")
-    # 멀티세렉트
-    option_list = ['짜장면', '짬뽕', '탕수육']
-    option = st.multiselect('메뉴를 선택하세요', option_list)
-    st.write(option)
+    '''
+    st.code(code)
 
-
-    st.markdown("---")
-    st.header("슬라이더 선택")
-    age = st.slider('나이', 1, 120, 30, 5)
-    st.text('제가 선택한 나이는 {} 입니다.'.format(age))
-
-    # csv 저장시 utf-8로 저장
-    st.markdown("---")
-    st.header("익스펜더")
-    df = pd.read_csv('sample_csv.csv')
-    with st.expander('데이터프레임 보기') :
-        st.dataframe(df)
-
-
+    # 시간 입력폼
     st.markdown("---")
     st.header("시간 입력폼")
     my_time = st.time_input('시간 선택')
     st.write(my_time)
+    code = '''
+    my_time = st.time_input('시간 선택')
+    st.write(my_time)
+    '''
+    st.code(code)
 
 
+
+    # 다중선택
+    st.markdown("---")
+    st.header("다중 선택")
+    option_list = ['짜장면', '짬뽕', '탕수육']
+    option = st.multiselect('메뉴를 선택하세요', option_list)
+    st.write(option)
+
+    code = '''
+    option_list = ['짜장면', '짬뽕', '탕수육']
+    option = st.multiselect('메뉴를 선택하세요', option_list)
+    st.write(option)
+    '''
+    st.code(code)
+
+
+    # 슬라이더 선택
+    st.markdown("---")
+    st.header("슬라이더 선택")
+    age = st.slider('나이', 1, 120, 30, 5)
+    st.text('제가 선택한 나이는 {} 입니다.'.format(age))
+    code = '''
+    age = st.slider('나이', 1, 120, 30, 5)
+    st.text('제가 선택한 나이는 {} 입니다.'.format(age))
+    '''
+    st.code(code)
+
+
+
+    # 엑셀파일 출력
+    st.markdown("---")
+    st.header("엑셀파일 출력")
+    df = pd.read_csv('sample_csv.csv')
+    with st.expander('데이터프레임 보기') :
+        st.dataframe(df)
+    
+    code = '''
+    df = pd.read_csv('sample_csv.csv')
+    with st.expander('데이터프레임 보기') :
+        st.dataframe(df)
+    '''
+    st.code(code)
+
+
+
+
+    # 색상입력 폼
     st.markdown("---")
     st.header("색상 입력폼")
     color = st.color_picker('색을 선택하세요')
     st.write(color)
+    code = '''
+    color = st.color_picker('색을 선택하세요')
+    st.write(color)
+    '''
+    st.code(code)
+    
 
 #차트 출력
 def chart():
