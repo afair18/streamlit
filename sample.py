@@ -203,7 +203,7 @@ def view():
 # 폼 출력
 def form():
     st.markdown("---")
-    st.header("텍스트 입력 폼")
+    st.header("텍스트 입력 폼11")
     # 1. 이름 입력 받기
     name = st.text_input('이름을 입력하세요!')
 
