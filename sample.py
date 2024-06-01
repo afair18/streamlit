@@ -98,7 +98,7 @@ def setting():
 def view():
     # 출력부분
         
-    st.title("텍스트 출력.")
+    st.title("텍스트 출력-b1")
     st.header("Header")
     st.subheader("subheader")
     st.write('Hello, *World!* :sunglasses:')
