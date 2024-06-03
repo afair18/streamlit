@@ -11,6 +11,7 @@ import numpy as np
 
 # 사이드바 메뉴
 # b5 추가
+# 사이드바 메뉴-b4
 with st.sidebar:
     choice = option_menu("Menu", ["세팅","출력", "폼", "차트","MYSQL","기타기능","langchain"],
     icons=['gear','view-stacked', 'ui-checks', 'bar-chart','database-check','cpu','robot'],
