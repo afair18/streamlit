@@ -1,0 +1,24 @@
+# 깃허브액션 테스트
+name: 'Test Action'
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Run a one-line script
+        run: echo Hello, world!
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
+          ```
+          echo "Hello World"
+          ```
+
+- 위와 같이 작성하면 깃허브액션을 테스트할 수 있다.
+
