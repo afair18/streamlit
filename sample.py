@@ -1461,26 +1461,7 @@ def allshow():
 
 
     # langchain 샘플코드
-    #pip install langchain
-    #pip install openai==0.27.0
-    import openai
-    from langchain.chat_models import ChatOpenAI
-    from langchain.prompts import PromptTemplate
-    from langchain.chains import LLMChain
-    import os
-
-    
-    
-    llm = ChatOpenAI(temperature=0,               # 창의성 (0.0 ~ 2.0) 
-                max_tokens=2048,             # 최대 토큰수
-                model_name='gpt-4o',  # 모델명
-                )
-    template = '{area1} 와 {area2} 의 시차는 몇시간이야?'
-    prompt = PromptTemplate(template=template, input_variables=['area1', 'area2'])
-    chain = LLMChain(prompt=prompt, llm=llm)
-
-    st.write(chain.run(area1='서울', area2='파리'))
-
+   
 
     code = '''
     # langchain 샘플코드
