@@ -11,7 +11,7 @@ import numpy as np
 
 # 사이드바 메뉴
 with st.sidebar:
-    choice = option_menu("Menu", ["세팅","출력", "폼", "차트","MYSQL","기타기능","langchain"],
+    choice = option_menu("Menu", ["세팅","출력", "폼", "차트","MYSQL","기타기능","langchain","모두보기"],
     icons=['gear','view-stacked', 'ui-checks', 'bar-chart','database-check','cpu','robot'],
     menu_icon="app-indicator", default_index=0,
     styles={
@@ -804,8 +804,7 @@ def langchain():
     import openai
     import os
 
-    # OpenAI API 키 설정
-    os.environ['OPENAI_API_KEY'] = "키값"
+
     
     # Langchain을 사용하여 모델 연결
     llm = ChatOpenAI(temperature=0,               # 창의성 (0.0 ~ 2.0) 
@@ -839,6 +838,716 @@ def langchain():
     st.code(code)
 
 
+def allshow():
+    # version: 1.35.0
+    # Description: Streamlit sample code
+    # 현재 버전 확인
+    #streamlit --version
+
+    # Streamlit 업그레이드
+    #pip install --upgrade streamlit
+
+    # 업그레이드 후 버전 확인
+    #streamlit --version
+
+
+    import streamlit as st
+    import pandas as pd
+    import numpy as np
+
+
+    # 페이지 세팅 상단에 위치
+
+
+    st.subheader('페이지세팅 / 글씨출력')
+    code = '''
+    st.set_page_config(
+        page_title="Streamlit-Samples",
+        page_icon="🧊",
+        layout="wide",
+        initial_sidebar_state="expanded",
+        menu_items={
+            'Get Help': 'https://www.extremelycoolapp.com/help',
+            'Report a bug': "https://www.extremelycoolapp.com/bug",
+            'About': "# This is a header. This is an *extremely* cool app!"
+        }
+    )
+    '''
+    st.code(code)
+
+
+    code = '''
+    # 아이콘이 있는 메뉴
+    from streamlit_option_menu import option_menu
+
+    with st.sidebar:
+        choice = option_menu("Menu", ["메뉴1","메뉴2"],
+        icons=['gear','view-stacked', 'ui-checks', 'bar-chart','database-check','cpu','robot'],
+        menu_icon="app-indicator", default_index=0,
+        styles={
+            "container": {"padding": "4!important", "background-color": "#fafafa"},
+            "icon": {"color": "black", "font-size": "20px"},
+            "nav-link": {"font-size": "14px", "text-align": "left", "margin":"0px", "--hover-color": "#fafafa"},
+            "nav-link-selected": {"background-color": "#08c7b4"},
+        }
+        )
+
+    # 각 메뉴에 대한 내용
+    def menu1():
+        st.write('메뉴1 입니다.')
+
+    def menu2():
+        st.write('메뉴2 입니다.')
+
+    # 메뉴연결
+    if choice == "메뉴1":
+        menu1()
+    elif choice == "메뉴2":
+        menu2()
+    else:
+        menu1()
+    '''
+
+    st.code(code)
+
+
+
+    sidebar = st.sidebar
+    with sidebar:
+        st.write('왼쪽 메뉴부분에 출력')
+    code = '''
+    sidebar = st.sidebar
+    with sidebar:
+        st.write('왼쪽 메뉴부분에 출력')
+    '''
+    st.code(code)
+
+    st.title('This is a title')
+    st.header('This is a header')
+    st.subheader('This is a subheader')
+    st.text('This is a text')
+    st.write('Hello, world!')
+
+    code = '''
+    st.title('This is a title')
+    st.header('This is a header')
+    st.subheader('This is a subheader')
+    st.text('This is a text')
+    st.write('Hello, world!')
+    '''
+
+    st.code(code)
+    st.divider()
+
+    st.subheader('폼입력')
+
+    name = st.text_input('이름 입력')
+    address = st.text_area('주소 입력')
+
+    colum = st.columns(2)
+    with colum[0]:
+        date1 = st.date_input('날짜 입력')
+
+    with colum[1]:
+        time1 = st.time_input('시간 입력')
+
+    st.write(pd.DataFrame({'name': [1,2,3,4], 'date1': [5,6,7,8], 'time': [9,10,11,12]}))
+
+    tab = st.tabs(['tab1', 'tab2', 'tab3'])
+
+    with tab[0]:
+        st.write('tab1')
+
+    agree = st.checkbox('동의합니다.')
+
+    if agree:
+        st.write('동의하셨습니다.')
+
+    on = st.toggle("Activate feature")
+
+    if on:
+        st.write("Feature activated!")
+
+    options = ['짜장', '짬뽕', '탕수육']
+
+    selected = st.selectbox('메뉴를 선택하세요.', options)
+    st.write('선택한 메뉴:', selected)
+
+    multi_selected = st.multiselect('메뉴를 선택하세요.', options) 
+    st.write('선택한 메뉴:', multi_selected)
+
+    number = st.number_input('숫자를 입력하세요.', min_value=0, max_value=100)
+    st.write('입력한 숫자:', number)
+
+    slider = st.slider('숫자를 선택하세요.', min_value=0, max_value=100)
+    st.write('선택한 숫자:', slider)
+
+    file = st.file_uploader('파일을 업로드하세요.')
+
+    color = st.color_picker('색상을 선택하세요.',value='#00f900')
+    st.write('선택한 색상:', color)
+
+    expander = st.expander('내용보기', expanded=True)
+    expander.write('여기에는 자세한 내용이 들어갑니다.')
+
+    st.link_button("Go to gallery", "https://streamlit.io/gallery")
+
+    code ='''
+    # 텍스트 박스
+    name = st.text_input('이름 입력')
+
+    # 텍스트 에어리어
+    address = st.text_area('주소 입력')
+
+    # 컬럼 나누기
+    colum = st.columns(2)
+    with colum[0]:
+        date1 = st.date_input('날짜 입력')
+
+    with colum[1]:
+        time1 = st.time_input('시간 입력')
+
+    st.write(pd.DataFrame({'name': [1,2,3,4], 'date1': [5,6,7,8], 'time': [9,10,11,12]}))
+
+    #탭
+    tab = st.tabs(['tab1', 'tab2', 'tab3'])
+
+    with tab[0]:
+        st.write('tab1')
+
+    #체크박스
+    agree = st.checkbox('동의합니다.')
+
+    if agree:
+        st.write('동의하셨습니다.')
+
+    #토글
+    on = st.toggle("Activate feature")
+
+    if on:
+        st.write("Feature activated!")
+
+    options = ['짜장', '짬뽕', '탕수육']
+
+    #단일선택
+    selected = st.selectbox('메뉴를 선택하세요.', options)
+    st.write('선택한 메뉴:', selected)
+
+    #다중선택
+    multi_selected = st.multiselect('메뉴를 선택하세요.', options) 
+    st.write('선택한 메뉴:', multi_selected)
+
+    #숫자입력
+    number = st.number_input('숫자를 입력하세요.', min_value=0, max_value=100)
+    st.write('입력한 숫자:', number)
+
+    # 슬라이드
+    slider = st.slider('숫자를 선택하세요.', min_value=0, max_value=100)
+    st.write('선택한 숫자:', slider)
+
+    #파일 업로드
+    file = st.file_uploader('파일을 업로드하세요.')
+
+    # 컬러선택
+    color = st.color_picker('색상을 선택하세요.',value='#00f900')
+    st.write('선택한 색상:', color)
+
+    expander = st.expander('내용보기')
+    expander.write('여기에는 자세한 내용이 들어갑니다.')
+    expander.image('https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png', width=200)
+
+    # 링크버튼
+    st.link_button("Go to gallery", "https://streamlit.io/gallery")
+    '''
+
+    st.code(code)
+
+    st.divider()
+
+    # 이미지, 비디오, 오디오
+    st.image('https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png', width=200)
+    st.video('https://www.w3schools.com/html/mov_bbb.mp4')
+    st.audio('https://www.w3schools.com/html/horse.mp3')
+
+    code = '''
+    # 이미지, 비디오, 오디오
+    st.image('https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png', width=200)
+    st.video('https://www.w3schools.com/html/mov_bbb.mp4')
+    st.audio('https://www.w3schools.com/html/horse.mp3')
+    '''
+
+    st.code(code)
+
+    st.divider()
+
+    # 차트 샘플 코드
+    st.subheader('차트')
+
+
+    st.bar_chart(pd.DataFrame({'a': [1,2,3,4]}))
+
+    chart_data = pd.DataFrame(
+        np.random.randn(10, 3),
+        columns=['a', 'b', 'c'])
+
+    st.line_chart(chart_data)
+
+
+    st.map(pd.DataFrame({'lat': [37.5665], 'lon': [126.9780]}))
+
+    code = '''
+    # 바차트
+    st.bar_chart(pd.DataFrame({'a': [1,2,3,4]}))
+
+    chart_data = pd.DataFrame(
+        np.random.randn(10, 3),
+        columns=['a', 'b', 'c'])
+
+    # 라인차트
+    st.line_chart(chart_data)
+
+    # 지도
+    st.map(pd.DataFrame({'lat': [37.5665], 'lon': [126.9780]}))
+    '''
+
+    # altair 사용하기
+    import pandas as pd
+    import numpy as np
+    import altair as alt
+
+    chart_data = pd.DataFrame(np.random.randn(20, 3), columns=["a", "b", "c"])
+
+    c = (
+        alt.Chart(chart_data)
+        .mark_circle()
+        .encode(x="a", y="b", size="c", color="c", tooltip=["a", "b", "c"])
+    )
+
+    st.altair_chart(c, use_container_width=True)
+
+    code = '''
+    # altair 사용하기
+    import pandas as pd
+    import numpy as np
+    import altair as alt
+
+    chart_data = pd.DataFrame(np.random.randn(20, 3), columns=["a", "b", "c"])
+
+    c = (
+        alt.Chart(chart_data)
+        .mark_circle()
+        .encode(x="a", y="b", size="c", color="c", tooltip=["a", "b", "c"])
+    )
+
+    st.altair_chart(c, use_container_width=True)
+    '''
+
+    st.code(code)
+
+    # plotly 사용하기
+    import plotly.express as px
+    import streamlit as st
+
+    st.subheader("Define a custom colorscale")
+    df = px.data.iris()
+    fig = px.scatter(
+        df,
+        x="sepal_width",
+        y="sepal_length",
+        color="sepal_length",
+        color_continuous_scale="reds",
+    )
+
+    tab1, tab2 = st.tabs(["Streamlit theme (default)", "Plotly native theme"])
+    with tab1:
+        st.plotly_chart(fig, theme="streamlit", use_container_width=True)
+    with tab2:
+        st.plotly_chart(fig, theme=None, use_container_width=True)
+
+    code = '''
+    # plotly 사용하기
+    import plotly.express as px
+    import streamlit as st
+
+    st.subheader("Define a custom colorscale")
+    df = px.data.iris()
+    fig = px.scatter(
+        df,
+        x="sepal_width",
+        y="sepal_length",
+        color="sepal_length",
+        color_continuous_scale="reds",
+    )
+
+    tab1, tab2 = st.tabs(["Streamlit theme (default)", "Plotly native theme"])
+    with tab1:
+        st.plotly_chart(fig, theme="streamlit", use_container_width=True)
+    with tab2:
+        st.plotly_chart(fig, theme=None, use_container_width=True)
+    '''
+
+    st.code(code)
+
+
+    st.divider()
+
+    # 팝오버
+    with st.popover("Open popover"):
+        st.markdown("Hello World 👋")
+        name = st.text_input("What's your name?")
+    st.write("Your name:", name)
+
+    code = '''
+    # 팝오버
+    with st.popover("Open popover"):
+        st.markdown("Hello World 👋")
+        name = st.text_input("What's your name?")
+    st.write("Your name:", name)
+    '''
+
+    st.code(code)
+
+
+
+    # 토스트박스
+    if st.button('토스트박스'):
+        st.toast('Hooray!', icon='🎉')
+
+    code = '''
+    # 토스트박스
+    if st.button('토스트박스'):
+        st.toast('Hooray!', icon='🎉')
+    '''
+
+    st.code(code)
+
+
+    # 로딩박스
+    with st.status("Downloading data..."):
+        st.write("Searching for data...")
+        time.sleep(1)
+        st.write("Found URL.")
+        time.sleep(1)
+        st.write("Downloading data...")
+
+    st.button("Rerun")
+
+    code = '''
+    # 로딩박스
+    with st.status("Downloading data..."):
+        st.write("Searching for data...")
+        time.sleep(2)
+        st.write("Found URL.")
+        time.sleep(1)
+        st.write("Downloading data...")
+        time.sleep(1)
+
+    st.button("Rerun")
+    '''
+
+    st.code(code)
+
+    # 모달 다이얼로그+변수
+    @st.experimental_dialog("Cast your vote")
+    def vote(item):
+        st.write(f"Why is {item} your favorite?")
+        reason = st.text_input("Because...")
+        if st.button("Submit"):
+            st.session_state.vote = {"item": item, "reason": reason}
+            st.rerun()
+
+    if "vote" not in st.session_state:
+        st.write("Vote for your favorite")
+        if st.button("A"):
+            vote("A")
+        if st.button("B"):
+            vote("B")
+    else:
+        f"You voted for {st.session_state.vote['item']} because {st.session_state.vote['reason']}"
+
+    code = '''
+    # 모달 다이얼로그+변수
+    @st.experimental_dialog("Cast your vote")
+    def vote(item):
+        st.write(f"Why is {item} your favorite?")
+        reason = st.text_input("Because...")
+        if st.button("Submit"):
+            st.session_state.vote = {"item": item, "reason": reason}
+            st.rerun()
+
+    if "vote" not in st.session_state:
+        st.write("Vote for your favorite")
+        if st.button("A"):
+            vote("A")
+        if st.button("B"):
+            vote("B")
+    else:
+        f"You voted for {st.session_state.vote['item']} because {st.session_state.vote['reason']}"
+        '''
+
+    st.code(code)
+
+    # chat message 샘플
+    # 채팅 메시지를 저장할 세션 상태 초기화
+    if "chat_messages" not in st.session_state:
+        st.session_state.chat_messages = []
+
+    # 채팅 메시지 샘플
+    messages = st.container()
+    if prompt := st.text_input("Prompt"):
+        # 새로운 메시지를 세션 상태에 추가
+        st.session_state.chat_messages.append(("assistant", f"Echo: {prompt}"))
+        st.session_state.chat_messages.append(("user", prompt))
+
+        # 모든 메시지를 렌더링
+        for sender, message in st.session_state.chat_messages:
+            messages.chat_message(sender).write(message)
+
+    code = '''
+    # chat message 샘플
+    # 채팅 메시지를 저장할 세션 상태 초기화
+    if "chat_messages" not in st.session_state:
+        st.session_state.chat_messages = []
+
+    # 채팅 메시지 샘플
+    messages = st.container()
+    if prompt := st.text_input("Prompt"):
+        # 새로운 메시지를 세션 상태에 추가
+        st.session_state.chat_messages.append(("assistant", f"Echo: {prompt}"))
+        st.session_state.chat_messages.append(("user", prompt))
+
+        # 모든 메시지를 렌더링
+        for sender, message in st.session_state.chat_messages:
+            messages.chat_message(sender).write(message)
+    '''
+
+    st.code(code)
+
+    picture = st.camera_input("Take a picture")
+
+
+    # html 넣기
+    code = """
+    <style>
+        h5 {
+            color: blue;
+            font-size: 10px;
+            margin: 10px;
+        }
+    </style>
+    """
+    st.code(code, language='html')
+    st.html(code)
+    st.markdown("<h5>Lorem ipsum</h5>", unsafe_allow_html=True)
+
+
+    # iframe 넣기
+    import streamlit.components.v1 as components
+    components.iframe("https://example.com", height=200)
+
+    code = """
+    # iframe 넣기
+    import streamlit.components.v1 as components
+    components.iframe("https://example.com", height=400)
+    """
+
+    st.code(code)
+
+
+
+    #metric
+    col1, col2, col3 = st.columns(3)
+    col1.metric("Temperature", "70 °F", "1.2 °F")
+    col2.metric("Wind", "9 mph", "-8%")
+    col3.metric("Humidity", "86%", "4%")
+
+    code = '''
+    #metric
+    col1, col2, col3 = st.columns(3)
+    col1.metric("Temperature", "70 °F", "1.2 °F")
+    col2.metric("Wind", "9 mph", "-8%")
+    col3.metric("Humidity", "86%", "4%")
+    '''
+
+    st.code(code)
+
+    # json 사용하기
+    json_data = {
+        'foo': 'bar',
+        'baz': 'boz',
+        'stuff': [
+            'stuff 1',
+            'stuff 2',
+            'stuff 3',
+            'stuff 5',
+        ],
+    }
+
+    st.json(json_data)
+
+    #jdata foo 출력
+    st.write(json_data['foo'])
+
+    code = '''
+    # json 사용하기
+    json_data = {
+        'foo': 'bar',
+        'baz': 'boz',
+        'stuff': [
+            'stuff 1',
+            'stuff 2',
+            'stuff 3',
+            'stuff 5',
+        ],
+    }
+
+    st.json(json_data)
+
+    #jdata foo 출력
+    st.write(json_data['foo'])
+    '''
+
+    st.code(code)
+
+    # 카메라 사용샘플 코드
+    st.camera_input('Take a picture', key='unique_key')
+
+
+    code = '''
+    # 카메라 사용샘플 코드
+    st.camera_input('Take a picture', key='unique_key')
+    '''
+
+    st.code(code)
+
+    # 세션 상태 사용하기
+    st.text_input("Your name", key="name")
+    st.session_state.name
+
+    code = '''
+    # 세션 상태 사용하기
+    st.text_input("Your name", key="name")
+    st.session_state.name
+    '''
+
+    st.code(code)
+
+    # 타임라인 사용하기
+    #pip install streamlit-timeline
+    from streamlit_timeline import timeline
+
+    # load data
+    with open('example.json', "r") as f:
+        data = f.read()
+
+    # render timeline
+    timeline(data, height=800)
+
+    code = '''
+    # 타임라인 사용하기
+    #pip install streamlit-timeline
+    from streamlit_timeline import timeline
+
+    # load data
+    with open('example.json', "r") as f:
+        data = f.read()
+
+    # render timeline
+    timeline(data, height=800)
+    '''
+
+    st.code(code)
+
+    # 몽고 DB CRUD 샘플코드
+    #pip install pymongo
+    # 몽고DB 윈도우 다운로드 https://www.mongodb.com/try/download/community
+
+    st.divider()
+
+    st.subheader('몽고 DB CRUD 샘플코드')
+
+
+    code = '''
+    # 몽고 DB CRUD 샘플코드
+    #pip install pymongo
+    # 몽고DB 윈도우 다운로드 https://www.mongodb.com/try/download/community
+    import pymongo
+    from pymongo import MongoClient
+
+    # connect to MongoDB
+    client = MongoClient("mongodb://localhost:27017/")
+    db = client["mydatabase"]
+    col = db["customers"]
+
+    # insert data
+    data = {"name": "John", "address": "Highway 37"}
+    col.insert_one(data)
+
+    # find data
+    result = col.find_one()
+    st.write(result)
+
+    # update data
+    query = {"address": "Highway 37"}
+    new_values = {"$set": {"address": "Canyon 123"}}
+    col.update_one(query, new_values)
+
+    # delete data
+    query = {"address": "Highway 37"}
+    col.delete_one(query)
+    '''
+
+    st.code(code)
+
+
+    # langchain 샘플코드
+    #pip install langchain
+    #pip install openai==0.27.0
+    import openai
+    from langchain.chat_models import ChatOpenAI
+    from langchain.prompts import PromptTemplate
+    from langchain.chains import LLMChain
+    import os
+
+    
+    
+    llm = ChatOpenAI(temperature=0,               # 창의성 (0.0 ~ 2.0) 
+                max_tokens=2048,             # 최대 토큰수
+                model_name='gpt-4o',  # 모델명
+                )
+    template = '{area1} 와 {area2} 의 시차는 몇시간이야?'
+    prompt = PromptTemplate(template=template, input_variables=['area1', 'area2'])
+    chain = LLMChain(prompt=prompt, llm=llm)
+
+    st.write(chain.run(area1='서울', area2='파리'))
+
+
+    code = '''
+    # langchain 샘플코드
+    #pip install langchain
+    #pip install openai==0.27.0
+    import openai
+    from langchain.chat_models import ChatOpenAI
+    from langchain.prompts import PromptTemplate
+    from langchain.chains import LLMChain
+    import os
+
+    
+    
+    llm = ChatOpenAI(temperature=0,               # 창의성 (0.0 ~ 2.0) 
+                max_tokens=2048,             # 최대 토큰수
+                model_name='gpt-4o',  # 모델명
+                )
+    template = '{area1} 와 {area2} 의 시차는 몇시간이야?'
+    prompt = PromptTemplate(template=template, input_variables=['area1', 'area2'])
+    chain = LLMChain(prompt=prompt, llm=llm)
+
+
+    st.write(chain.run(area1='서울', area2='파리'))
+
+    '''
+
+    st.code(code)
 
 
 # 메뉴에 따라 내용이 다르게 나옴 
@@ -856,6 +1565,8 @@ elif choice == "기타기능":
     etc()
 elif choice == "langchain":
     langchain()
+elif choice == "모두보기":
+    allshow()
 else:
     view()
 
